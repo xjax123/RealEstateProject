@@ -26,7 +26,7 @@
 	function getPropertyByLocation($name) {
 		$productList = array();
 		$conn = connect();
-		$results = $conn->query('SELECT * FROM properties WHERE City = "'.$name.'";');
+		$results = $conn->query('SELECT * FROM properties WHERE City = "'.$name.'" OR Province = "'.$name.'";');
 		$conn->close();
 		foreach($results as $r) {
 			array_push($productList, Property::generateNewPropertyFromQuery($r));

@@ -8,6 +8,7 @@
             $_SESSION['user'] = 'Unknown';
         }
     }
+    $_SESSION['ActivePage'] = $subtitle;
     require_once './backend/user.php';
     if (is_null($subtitle)) {
         throw new Exception("Subtitle Cannot Be Null");
@@ -149,7 +150,6 @@ foreach ($pages as $key => $page) {
             <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-            <a href="addrealtor.php">Add New Realtor</a>
             <a href="admin.php">Manage Users</a>
             <a href="listingmanager.php">Manage Listings</a>
             </div>

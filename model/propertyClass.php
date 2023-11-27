@@ -32,5 +32,9 @@
 		public function buildTable() {
 			return $this -> propertyID.'<br>';
 		}
+
+		public function toArray() {
+			return array('PID' => $this -> propertyID, 'RID' => $this -> realtorID, 'City' => $this -> city, 'Province' => $this->province, 'Price' => $this->price, 'Size' => $this->size, 'YearBuilt' => $this-> yearbuilt, 'Status' => $this->status, 'ListingDate' => $this->listingDate, 'TakenDownDate' => $this->takendowndate);
+		}
 	}
 ?>

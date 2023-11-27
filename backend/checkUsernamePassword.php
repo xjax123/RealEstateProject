@@ -2,11 +2,8 @@
 	require_once 'dbConnect.php';
 	
 	function isAdminAccount($inputUser) {
-		if (!(count_chars($inputUser) >= USERNAME_MIN && count_chars($inputUser) <= USERNAME_MAX)) {
-			throw new Error("Username not within accepted bounds");
-		}
 		$conn = connect();
-		$adminQuery = 'SELECT * FROM user WHERE username = "'.$inputUser.'" AND type = "Admin";';
+		$adminQuery = 'SELECT * FROM accounts WHERE Username = "'.$inputUser.'" AND AccountType = "Admin";';
 		$results = $conn->query($adminQuery);
 		$conn->close();
 		if ($results->num_rows == 1) {
@@ -15,12 +12,8 @@
 		return false;
 	}
 	function isRealtorAccount($inputUser) {
-		if (!(count_chars($inputUser) >= USERNAME_MIN && count_chars($inputUser) <= USERNAME_MAX)) {
-			throw new Error("Username not within accepted bounds");
-		}
-
 		$conn = connect();
-		$custQuery = 'SELECT * FROM user WHERE username = "'.$inputUser.'" AND type = "Realtor";';
+		$custQuery = 'SELECT * FROM accounts WHERE Username = "'.$inputUser.'" AND AccountType = "Realtor";';
 		$results = $conn->query($custQuery);
 		$conn->close();
 		if ($results->num_rows == 1) {
@@ -29,11 +22,8 @@
 		return false;
 	}
 	function isCustomerAccount($inputUser) {
-		if (!(count_chars($inputUser) >= USERNAME_MIN && count_chars($inputUser) <= USERNAME_MAX)) {
-			throw new Error("Username not within accepted bounds");
-		}
 		$conn = connect();
-		$custQuery = 'SELECT * FROM user WHERE username = "'.$inputUser.'" AND type = "Customer";';
+		$custQuery = 'SELECT * FROM accounts WHERE Username = "'.$inputUser.'" AND AccountType = "Customer";';
 		$results = $conn->query($custQuery);
 		$conn->close();
 		if ($results->num_rows == 1) {

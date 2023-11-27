@@ -5,9 +5,9 @@
 
 	if ($_SESSION["AccountType"] == "Admin") {
 		require './view/searchbar.php';
-
+		echo'<div id="searchTarget"></div>';
 	} else if ($_SESSION["AccountType"] == "Realtor") {
-		echo "<h3>Current Properties</h3>";
+		echo '<h3>Current Properties</h3> <form action="newlisting.php"><input type="submit" value="Add New Listing"></form>';
 		$properties = getPropertyByRealtor($_SESSION['UID']);
 		$stringBuilder = "";
 		$stringBuilder .= '<table class="outputTable">
@@ -23,7 +23,7 @@
 				<th>Status</th>
 				<th>Listing Date</th>
 				<th>Delisting Date</th>
-				<th>Modify?</th>
+				<th>Modify Listing</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -44,7 +44,7 @@
 				<td>'.$property->yearbuilt.'</td>
 				<td>'.$property->status.'</td>
 				<td>'.$property->listingDate.'</td>
-				<td>'.$property->takendowndate.'</td>
+				<td>'.(($property->takendowndate == "0000-00-00 00:00:00" || empty($property->takendowndate)) ? 'Active' : $property->takendowndate).'</td>
 				<td><form method="POST" action="modifyproperty.php"><input type="hidden" id="PID" name="PID" value="'.$property->propertyID.'"><input type="submit" id="submit" value="Edit"></form></td>
 				</tr>
 			';

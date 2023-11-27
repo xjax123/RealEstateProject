@@ -22,7 +22,7 @@
 		xhttp.onreadystatechange = function() {
 			target.innerHTML = this.responseText;
 		};
-		xhttp.open("GET", 'search.php?search="'+text+'&filter='+filter, true);
+		xhttp.open("GET", 'search.php?search='+text+'&filter='+filter, true);
 		xhttp.send();
 	}
 </script>

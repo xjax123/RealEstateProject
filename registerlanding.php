@@ -1,6 +1,7 @@
 <?php
     require_once './backend/dbConnect.php';
     require_once './view/redirect.php';
+    require_once './view/header.php';
 
     $user = $_POST['user'];
     $pass = $_POST['pass'];
@@ -32,4 +33,6 @@
     } else {
         redirect("Something Went Wrong with your entry! please try again", "register.php", 5);
     }
+    
+    require_once './view/footer.php';
 ?>

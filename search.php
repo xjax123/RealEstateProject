@@ -2,6 +2,7 @@
 require_once './model/propertySearch.php';
 require_once './model/propertyClass.php';
 require_once './backend/inputscrub.php';
+    session_start();
     $type = $_GET['filter'];
     $name = $_GET['search'];
     $name = scrub($name);
@@ -19,6 +20,10 @@ require_once './backend/inputscrub.php';
     } else {
         throw new Exception("Unknown Search Typing");
     }
+    $adminMode = false;
+    if ($_SESSION['ActivePage'] == "My Listings" && $_SESSION['AccountType'] == "Admin") {
+        $adminMode = true;
+    }
     $stringBuilder = "";
     $stringBuilder .= '<table class="outputTable">
     <thead>
@@ -34,7 +39,7 @@ require_once './backend/inputscrub.php';
             <th>Listing Date</th>
             <th>Delisting Date</th>
             <th>Realtor Name</th>
-            <th>Contact Realtor</th>
+            <th>'.(($adminMode)?'Modify?':'Contact Realtor').'</th>
         </tr>
     </thead>
     <tbody>
@@ -62,9 +67,9 @@ require_once './backend/inputscrub.php';
             <td>'.$property->yearbuilt.'</td>
             <td>'.$property->status.'</td>
             <td>'.$property->listingDate.'</td>
-            <td>'.$property->takendowndate.'</td>
+            <td>'.(($property->takendowndate == "0000-00-00 00:00:00" || empty($property->takendowndate)) ? 'Active' : $property->takendowndate).'</td>
             <td>'.$realtorname.'</td>
-            <td><form method="POST" action="emailform.php"><input type="hidden" id="email" name="email" value="'.$realtoremail.'"><input type="hidden" id="name" name="name" value="'.$realtorname.'"><input type="submit" id="submit" value="Contact Me"></form></td>
+            <td>'.(($adminMode)?'<form method="POST" action="modifyproperty.php"><input type="hidden" id="PID" name="PID" value="'.$property->propertyID.'"><input type="submit" id="submit" value="Edit"></form>':'<form method="POST" action="emailform.php"><input type="hidden" id="email" name="email" value="'.$realtoremail.'"><input type="hidden" id="name" name="name" value="'.$realtorname.'"><input type="submit" id="submit" value="Contact Me"></form>').'</td>
         </tr>
         ';
     }
