@@ -1,8 +1,8 @@
 <?php
-	$subtitle = "Shop";
+	$subtitle = "My Listings";
 	require './view/header.php';
 ?>
-this is the realtor listings page
+this is the report generation page
 <?php
 	require './view/footer.php';
 ?>

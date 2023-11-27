@@ -1,8 +1,8 @@
 <?php
-	$subtitle = "My Listings";
+	$subtitle = "Add Realtor";
 	require './view/header.php';
 ?>
-this is the user management page
+this is the user generation page
 <?php
 	require './view/footer.php';
 ?>

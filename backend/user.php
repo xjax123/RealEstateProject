@@ -18,4 +18,22 @@
 			return $this -> username;
 		}
 	}
+
+	function updateUserDetails($UID) {
+		$connection = connect();
+		$result = $connection -> query('SELECT * FROM accounts WHERE AccountID = "'.$UID.'";');
+		if ($result -> num_rows > 0) {
+			$row = $result -> fetch_assoc();
+			$code = response_code::Success;
+			$_SESSION['user'] = $row['Username'];
+			$_SESSION['UID'] = $row["AccountID"];
+			$_SESSION["AccountType"] = $row["AccountType"];
+			$_SESSION["Name"] = $row["Name"];
+			$_SESSION["Email"] = $row["Email"];
+			setcookie("user", $row['Username'], (86400 * 30), "/");
+		} else {
+			$code = response_code::UserNotFound;
+		}
+		return $code;
+	}
 ?>

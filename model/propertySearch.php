@@ -32,11 +32,31 @@
 			array_push($productList, Property::generateNewPropertyFromQuery($r));
 		}
 		return $productList;
+	}	
+	function getPropertyByID($ID) {
+		$productList = array();
+		$conn = connect();
+		$results = $conn->query('SELECT * FROM properties WHERE PropertyID = "'.$ID.'";');
+		$conn->close();
+		foreach($results as $r) {
+			array_push($productList, Property::generateNewPropertyFromQuery($r));
+		}
+		return $productList;
 	}
 	function getPropertyByYear($name) {
 		$productList = array();
 		$conn = connect();
 		$results = $conn->query('SELECT * FROM properties WHERE YearBuilt = "'.$name.'";');
+		$conn->close();
+		foreach($results as $r) {
+			array_push($productList, Property::generateNewPropertyFromQuery($r));
+		}
+		return $productList;
+	}
+	function getPropertyByRealtor($RID) {
+		$productList = array();
+		$conn = connect();
+		$results = $conn->query('SELECT * FROM properties WHERE RealtorID = "'.$RID.'";');
 		$conn->close();
 		foreach($results as $r) {
 			array_push($productList, Property::generateNewPropertyFromQuery($r));

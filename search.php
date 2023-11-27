@@ -2,7 +2,6 @@
 require_once './model/propertySearch.php';
 require_once './model/propertyClass.php';
 require_once './backend/inputscrub.php';
-    mail("catstrophecatalyst@gmail.com","Testing","123","From: webmaster@realestatesite.com");
     $type = $_GET['filter'];
     $name = $_GET['search'];
     $name = scrub($name);
@@ -15,6 +14,8 @@ require_once './backend/inputscrub.php';
         $properties = getPropertyByLocation($name);
     } elseif ($type == "year") {
         $properties = getPropertyByYear($name);
+    } else if ($type == "id") {
+        $properties = getPropertyByID($name);
     } else {
         throw new Exception("Unknown Search Typing");
     }
@@ -33,12 +34,23 @@ require_once './backend/inputscrub.php';
             <th>Listing Date</th>
             <th>Delisting Date</th>
             <th>Realtor Name</th>
-            <th>Contact Realtor Name</th>
+            <th>Contact Realtor</th>
         </tr>
     </thead>
     <tbody>
     ';
     foreach ($properties as $property) {
+        $RID = $property->realtorID;
+        $conn = connect();
+        $result = $conn -> query('SELECT * FROM `accounts` WHERE AccountID = '.$RID.';');
+        $conn->close();
+        $realtorname ="";
+        $realtoremail ="";
+		foreach($result as $r) {
+            $realtorname = $r["Name"];
+            $realtoremail = $r["Email"];
+		}
+        
         $stringBuilder .= '
         <tr>
             <td>'.$property->propertyID.'</td>
@@ -51,6 +63,8 @@ require_once './backend/inputscrub.php';
             <td>'.$property->status.'</td>
             <td>'.$property->listingDate.'</td>
             <td>'.$property->takendowndate.'</td>
+            <td>'.$realtorname.'</td>
+            <td><form method="POST" action="emailform.php"><input type="hidden" id="email" name="email" value="'.$realtoremail.'"><input type="hidden" id="name" name="name" value="'.$realtorname.'"><input type="submit" id="submit" value="Contact Me"></form></td>
         </tr>
         ';
     }

@@ -1,5 +1,5 @@
 <?php
-	$subtitle = "Shop";
+	$subtitle = "View Listings";
 	require './view/header.php';
 
 	require './view/searchbar.php';

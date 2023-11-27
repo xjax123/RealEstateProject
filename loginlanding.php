@@ -3,8 +3,8 @@
     $subtitle = "Landing";
     require_once './backend/modelConstants.php';
     require_once './backend/dbConnect.php';
+    require_once './backend/writevalue.php';
 
-    $code = response_code::Failed;
     $connection = connect();
 
     $user = $_GET['user'];
@@ -17,16 +17,16 @@
         $row = $result -> fetch_assoc();
         $userpass = $row["Password"];
         if ($pass == $userpass) {
-            $code = response_code::Success;
+            updateValue("account","LastLogin",date("Y-m-d H:i:s"),$row["AccountID"]);
+            tickLogins($row["AccountID"]);
             $_SESSION['user'] = $user;
             $_SESSION['UID'] = $row["AccountID"];
             $_SESSION["AccountType"] = $row["AccountType"];
+            $_SESSION["Name"] = $row["Name"];
+            $_SESSION["Email"] = $row["Email"];
+            $_SESSION["LastLogin"] = date("Y-m-d H:i:s");
             setcookie("user", $user, (86400 * 30), "/");
-        } else {
-            $code = response_code::IncorrectPassword;
         }
-    } else {
-        $code = response_code::UserNotFound;
     }
    
   require_once './view/header.php'; 

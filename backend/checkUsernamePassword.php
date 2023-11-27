@@ -14,12 +14,24 @@
 		}
 		return false;
 	}
-
-	function isCustomerAccount($inputUser) {
+	function isRealtorAccount($inputUser) {
 		if (!(count_chars($inputUser) >= USERNAME_MIN && count_chars($inputUser) <= USERNAME_MAX)) {
 			throw new Error("Username not within accepted bounds");
 		}
 
+		$conn = connect();
+		$custQuery = 'SELECT * FROM user WHERE username = "'.$inputUser.'" AND type = "Realtor";';
+		$results = $conn->query($custQuery);
+		$conn->close();
+		if ($results->num_rows == 1) {
+			return true;
+		}
+		return false;
+	}
+	function isCustomerAccount($inputUser) {
+		if (!(count_chars($inputUser) >= USERNAME_MIN && count_chars($inputUser) <= USERNAME_MAX)) {
+			throw new Error("Username not within accepted bounds");
+		}
 		$conn = connect();
 		$custQuery = 'SELECT * FROM user WHERE username = "'.$inputUser.'" AND type = "Customer";';
 		$results = $conn->query($custQuery);
@@ -32,19 +44,20 @@
 
 	function accountExists($inputUser) {
 		$cus = isCustomerAccount($inputUser);
+		$real = isRealtorAccount($inputUser);
 		$admin = isAdminAccount($inputUser);
-		return $cus || $admin;
+		return $cus || $admin || $real;
 	}
 	
 	function checkAccount($inputUser) {
 		if (!accountExists($inputUser)) {
 			throw new Exception("Account Does Not Exist");
 		}
-
 		if (isAdminAccount($inputUser)) {
 			return account_type::Admin;
-		}
-		elseif (isCustomerAccount($inputUser)) {
+		} else if (isRealtorAccount($inputUser)) {
+			return account_type::Realtor;
+		} else if (isCustomerAccount($inputUser)) {
 			return account_type::Customer;
 		}
 	}

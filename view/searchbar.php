@@ -6,6 +6,7 @@
 				<option value="price">Price</option>
 				<option value="location">Location</option>
 				<option value="year">Year</option><br>
+				<option value="id">ID</option><br>
 			<input type="submit" onclick="request()">
 	</div>
 </main>

@@ -109,10 +109,8 @@ if ($_SESSION['user'] != "Unknown" && $_SESSION["user"] != null) {
     $rightpages = [];
     $type =  $_SESSION["AccountType"];
     if ($type == "Admin") {
-        $rightpages['Tickets'] = 'tickets';  
+        $rightpages['Reports'] = 'reports';  
         $rightpages['Administration'] = 'admin';  
-    } else if ($type == "Realtor") {
-        $rightpages['Manage Listings'] = 'listingmanager';
     }
     $rightpages[$_SESSION['user']] = "accountmanagement";
 }
@@ -139,12 +137,24 @@ foreach ($pages as $key => $page) {
             <div class="dropdown-content">
             <a href="accountmanagement.php">My Account</a>';
         if ($_SESSION["AccountType"] == "Realtor") {
-            $stringBuilder .='<a href="realtorlistings.php">My Listings</a>';
+            $stringBuilder .='<a href="listingmanager.php">My Listings</a>';
         }
         $stringBuilder .='<a href="logoutlanding.php">Log Out</a>
             </div>
         </div>';
-    } else {
+    } else if ($page == "admin") {
+        $stringBuilder .= '  
+        <div class="dropdown '.$side.'">
+            <button class="dropbtn '.$active.'">'.$key.'
+            <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+            <a href="addrealtor.php">Add New Realtor</a>
+            <a href="admin.php">Manage Users</a>
+            <a href="listingmanager.php">Manage Listings</a>
+            </div>
+        </div>';
+    }else {
         $stringBuilder .= '<a class="'.$side.$active.'" href="'.$page.'.php">'.$key.'</a>';
     }
 }

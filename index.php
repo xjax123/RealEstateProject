@@ -1,6 +1,6 @@
 <?php
 	$subtitle = "Home";
-	require './view/header.php';
+	require './view/header.php';	
 ?>
 this is the home page
 <?php
