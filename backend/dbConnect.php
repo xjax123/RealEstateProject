@@ -22,10 +22,10 @@
 			return $this -> conn -> query($sql);
 		}
 
-		private function insert($data) {
+		public function insert($data) {
 			$result = $this -> query($data);
 			if ( $result === TRUE) {
-				return "New record created successfully";
+				return true;
 			  } else {
 				throw new Error("Error: " . $data . "<br>" . $this->conn->error);
 			} 

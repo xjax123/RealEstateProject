@@ -100,10 +100,14 @@ Name: <input type="text" id="name"><br>
     function updateValue(fieldid, responseid, category, type) {     
         var xml = new XMLHttpRequest();
         var value = document.getElementById(fieldid).value;
+        field = document.getElementById(responseid);
+        if (value.length == 0) {
+            field.innerHTML = "Adjusted Values Cannot Be Blank";
+            return;
+        }
         xml.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 result = this.responseText;
-                field = document.getElementById(responseid);
                 if (result == "Completed") {
                     field.innerHTML = "Operation Completed Successfully, changes will be reflected on a refresh.";
                 } else {

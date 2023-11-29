@@ -32,7 +32,26 @@
 					<option value="House">House</option>
 					<option value="Apartment">Apartment</option>
 		</select><br>
-		<input type="submit" name="submit" id="submit" value="Submit">
+		<input type="submit" name="submit" id="submit" value="Submit"></form>
+		
+		<div id="output"></div>
     ';
 	require './view/footer.php';
-?> 
+?>
+<script>
+	function validateForm() {
+		var city = document.getElementById("city").value;
+		var province = document.getElementById("province").value;
+		var sizemin = document.getElementById("sizemin").value;
+		var sizemax = document.getElementById("sizemax").value;
+		var pricemin = document.getElementById("pricemin").value;
+		var pricemax = document.getElementById("pricemax").value;
+		var output = document.getElementById("output");
+
+		if (city.length == 0 || province.length == 0 || sizemin.length == 0 || sizemax.length == 0|| pricemin.length == 0 || pricemax.length == 0) {
+			output.innerHTML = "Cannot Have Blank Entries";
+			return false;
+		}
+		return true;
+	}
+</script>

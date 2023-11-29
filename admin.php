@@ -35,8 +35,32 @@
 <div id="deloutput"></div>
 
 <script>
-	function validate() {
+	var button =document.getElementById("submit");
+	function hide() {
+		if (validate()) {
+			button.disabled = false;
+			button.style.backgroundColor = "#008000"
+		} else {
+			button.disabled = false;
+			button.style.backgroundColor = "#FF0000"
+		}
+		setTimeout(hide, 10);
+	}
 
+	function validate() {
+		var username = document.getElementById("username").value;
+		var password = document.getElementById("password").value;
+		var email = document.getElementById("email").value;
+		var phone = document.getElementById("phone").value;
+		var name = document.getElementById("name").value;
+
+		if (username == "" || password == "" || email == "" || phone == "" || name == "") {
+			return false;
+		}
+		if (username.length < 6 || password.length < 6) {
+			return false
+		}
+		return true;
 	}
 
 	function delFind() {
@@ -52,6 +76,8 @@
 		xhttp.open("GET", 'delete.php?target='+target+'&id='+id+'&filter='+filter, true);
 		xhttp.send();
 	}
+	
+	hide();
 </script>
 
 <style type="text/css">

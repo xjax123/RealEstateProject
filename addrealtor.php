@@ -1,4 +1,5 @@
 <?php
+	mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     $subtitle = "Add Realtor";
 	require './view/header.php';
 	require './view/redirect.php';
@@ -15,15 +16,22 @@
 		$image = $defaultImage;
 	}
 
+	try {
 	$conn = connect();
-	$result = $conn ->query('INSERT INTO `accounts`(`Username`, `Password`, `AccountType`, `Email`, `PhoneNumber`, `Image`, `Name`) VALUES ("'.$user.'","'.$pass.'","Realtor","'.$email.'","'.$phone.'","'.$image.'","'.$name.'")');
+	$result = $conn -> query('SELECT AccountID FROM `accounts` WHERE Username = "'.$user.'" OR Email = "'.$email.'";');
+	$conn -> close();
+	if ($result -> num_rows > 0) {
+		throw new Exception("Duplicate Entry Detetected, Please choose a different username and/or email");
+	}
+	$conn = connect();
+	$result = $conn -> insert('INSERT IGNORE INTO `accounts`(`Username`, `Password`, `AccountType`, `Email`, `PhoneNumber`, `Image`, `Name`) VALUES ("'.$user.'","'.$pass.'","Realtor","'.$email.'","'.$phone.'","'.$image.'","'.$name.'")');
 	$conn ->close();
-	
-	if ($result == true) {
-		redirect('Success, User Created', './admin.php', 5);
-	} else {
-		redirect('Hrm... Seems Something Went Wrong Here', './admin.php', 5);
+	} catch (Exception $e) {
+		redirect('Hrm... Seems Something Went Wrong Here: '.$e ->getMessage().'<br>', './admin.php', 5);
+		return;
 	}
 	
-	require './view/header.php';
+		redirect('Success, User Created', './admin.php', 5);
+	
+	require './view/footer.php';
 ?>
