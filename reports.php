@@ -62,31 +62,64 @@ Month:
 </script>
 
 <style type="text/css">
-	.outputTable  {
-		border-collapse:collapse;
-		border-spacing:0;
-	}
-	.outputTable td {
-		border-color:black;
-		border-style:solid;
-		border-width:1px;
-		font-family:Arial, sans-serif;
-		font-size:14px;
-		overflow:hidden;
-		padding:10px 5px;
-		word-break:normal;
-	}
-	.outputTable th {
-		border-color:black;
-		border-style:solid;
-		border-width:1px;
-		font-family:Arial, sans-serif;
-		font-size:14px;
-		font-weight:normal;
-		overflow:hidden;
-		padding:10px 5px;
-		word-break:normal;
-	}
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #e0e0e0;
+            margin: 0;
+        }
+
+        h3 {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+		.content-box {
+            border: 3px solid black;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: white;
+            margin: 20px auto;
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        select, input[type="text"], button {
+            font-family: 'Montserrat', sans-serif;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+
+        table.outputTable {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .outputTable td, .outputTable th {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .outputTable th {
+            background-color: #f2f2f2;
+        }
 </style>
 <?php
 	require './view/footer.php';

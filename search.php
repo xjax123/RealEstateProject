@@ -83,5 +83,7 @@ require_once './backend/inputscrub.php';
     .outputTable th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
       font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
     </style>';
+    echo "<div class='content-box'>";
     echo $stringBuilder;
+    echo "</div>";
 ?>
