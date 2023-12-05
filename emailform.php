@@ -10,6 +10,8 @@
 <?php
     $email = $_POST['email'];
     $name = $_POST['name'];
+    $image = $_POST['image'];
+
 	$subtitle = "Contact ".$name;
 	require_once './view/header.php';
 
@@ -19,6 +21,7 @@
     } else {
         $stringBuilder .= '<h3>Contact '.$name.'</h3>';
         $stringBuilder .= 'Realtor Email: '.$email.'<br>';
+        $stringBuilder .= '<img class="image" src="'.str_replace(realpath($_SERVER["DOCUMENT_ROOT"]), "", getcwd()).'\\images\\'.$image.'" alt="Realtor PFP">';
         $stringBuilder .= '<form method="POST" action="email.php" id="emailresponse">
         <label>
         <input type="hidden" id="rname" name="rname" value="'.$name.'"><br>
@@ -35,3 +38,9 @@
     }
 	require './view/footer.php';
 ?>
+
+<style>
+    .image {
+        float:right;
+    }
+</style>

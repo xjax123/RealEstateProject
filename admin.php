@@ -19,7 +19,7 @@
 			<td><input type="text" id="password" name="password"></td>
 			<td><input type="text" id="email" name="email"></td>
 			<td><input type="text" id="phone" name="phone"></td>
-			<td><input type="text" id="image" name="image"></td>
+			<td><input type="file" id="image" name="image"></td>
 			<td><input type="text" id="name" name="name"></td>
 			<td><input type="submit" id="submit" name="submit" value="Submit!"></td>
 		</form>

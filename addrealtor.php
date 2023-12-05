@@ -5,16 +5,22 @@
 	require './view/redirect.php';
 	require_once './backend/dbConnect.php';
 
-	$defaultImage = "https://i.imgur.com/p6qgYpr.jpg";
+	$defaultImage = "default.png";
 	$user = $_POST['username'];
 	$pass = $_POST['password'];
 	$phone = $_POST['phone'];
 	$email = $_POST['email'];
 	$name = $_POST['name'];
-	$image = $_POST['image'];
-	if ($image == "default" or $image == "") {
+	$image = $_FILES['productImage']['name'];
+	if ($image == "default" || !isset($image)) {
 		$image = $defaultImage;
 	}
+
+    $uploadfile =  __DIR__.'\\images\\'.basename($_FILES['productImage']['name']);
+    if (move_uploaded_file($_FILES['productImage']['tmp_name'], $uploadfile)) {
+    } else {
+        throw new Error("Possible file upload attack!");
+    }
 
 	try {
 	$conn = connect();

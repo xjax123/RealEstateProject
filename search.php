@@ -54,6 +54,7 @@ require_once './backend/inputscrub.php';
 		foreach($result as $r) {
             $realtorname = $r["Name"];
             $realtoremail = $r["Email"];
+            $realtorImage = $r["Image"];
 		}
         
         $stringBuilder .= '
@@ -69,7 +70,7 @@ require_once './backend/inputscrub.php';
             <td>'.$property->listingDate.'</td>
             <td>'.(($property->takendowndate == "0000-00-00 00:00:00" || empty($property->takendowndate)) ? 'Active' : $property->takendowndate).'</td>
             <td>'.$realtorname.'</td>
-            <td>'.(($adminMode)?'<form method="POST" action="modifyproperty.php"><input type="hidden" id="PID" name="PID" value="'.$property->propertyID.'"><input type="submit" id="submit" value="Edit"></form>':'<form method="POST" action="emailform.php"><input type="hidden" id="email" name="email" value="'.$realtoremail.'"><input type="hidden" id="name" name="name" value="'.$realtorname.'"><input type="submit" id="submit" value="Contact Me"></form>').'</td>
+            <td>'.(($adminMode)?'<form method="POST" action="modifyproperty.php"><input type="hidden" id="PID" name="PID" value="'.$property->propertyID.'"><input type="submit" id="submit" value="Edit"></form>':'<form method="POST" action="emailform.php"><input type="hidden" id="image" name="image" value="'.$realtorImage.'"><input type="hidden" id="email" name="email" value="'.$realtoremail.'"><input type="hidden" id="name" name="name" value="'.$realtorname.'"><input type="submit" id="submit" value="Contact Me"></form>').'</td>
         </tr>
         ';
     }

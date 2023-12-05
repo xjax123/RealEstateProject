@@ -15,7 +15,7 @@ enum response_code: int
 	case IncorrectPassword = 500;
 }
 
-const SQL_SERVERNAME = 'localhost:3306';
+const SQL_SERVERNAME = 'localhost:6600';
 const SQL_USERNAME = 'root';
 const SQL_PASSWORD = '';
 const SQL_DATABASE = 'realestatesite';
