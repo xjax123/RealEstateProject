@@ -46,6 +46,15 @@ require './view/header.php';
             border-radius: 4px;
             cursor: pointer;
         }
+        
+        .submit {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
         button:hover {
             background-color: #2980b9;
@@ -93,11 +102,42 @@ require './view/header.php';
     </style>
 </head>
 
+<?php
+require_once './backend/dbConnect.php';
+$imageoutput = "";
+if (isset($_POST['imagesubmit'])) {    
+    $defaultImage = "default.png";
+    $image = $_FILES['accountImage']['name'];
+    if ($image == "default" || !isset($image)) {
+        $image = $defaultImage;
+    }
 
+    $uploadfile =  __DIR__.'\\images\\'.basename($_FILES['accountImage']['name']);
+    if (move_uploaded_file($_FILES['accountImage']['tmp_name'], $uploadfile)) {
+    } else {
+        throw new Error("Possible file upload attack!");
+    }
+    try {
+        $conn = connect();
+        $user = $_SESSION['user'];
+        $result = $conn -> query('SELECT AccountID FROM `accounts` WHERE Username = "'.$user.'";');
+        $conn -> close();
+        $conn = connect();
+        $result = $conn -> insert('UPDATE `accounts` SET Image = "'.$image.'" WHERE Username = "'.$user.'";');
+        $conn ->close();
+        if ($result) {
+            $imageoutput = "Image Updated";
+        } else {
+            $imageoutput = "Unknown Error";
+        }
+    } catch (Error $e) {
+        $imageoutput = $e->getMessage();
+    }
+}
+?>
 
 <div class="account-section">
     <h3>Adjust Account Details</h3>
-
     Username: <input type="text" id="username"><br>
     <button onclick='updateValue("username","usernameresult", "account", "Username")'>Adjust Username</button><br>
     <div id="usernameresult"></div><br>
@@ -109,6 +149,10 @@ require './view/header.php';
     Email: <input type="text" id="email"><br>
     <button onclick='updateValue("email","emailresult", "account", "Email")'>Adjust Email</button><br>
     <div id="emailresult"></div><br>
+    
+    Image: <form method="POST" action="#" enctype="multipart/form-data"><input type="file" id="accountImage" name="accountImage" class="form-input" required><br>
+    <input class="submit" type="submit" name="imagesubmit" value="Adjust Image"><br>
+    <div id="imageresult"><?php echo $imageoutput; ?></div><br>
 
     Phone Number: <input type="text" id="phone"><br>
     <button onclick='updateValue("phone","phoneresult", "account", "PhoneNumber")'>Adjust Phone Number</button><br>

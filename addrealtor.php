@@ -11,13 +11,13 @@
 	$phone = $_POST['phone'];
 	$email = $_POST['email'];
 	$name = $_POST['name'];
-	$image = $_FILES['productImage']['name'];
+	$image = $_FILES['image']['name'];
 	if ($image == "default" || !isset($image)) {
 		$image = $defaultImage;
 	}
 
-    $uploadfile =  __DIR__.'\\images\\'.basename($_FILES['productImage']['name']);
-    if (move_uploaded_file($_FILES['productImage']['tmp_name'], $uploadfile)) {
+    $uploadfile =  __DIR__.'\\images\\'.basename($_FILES['image']['name']);
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile)) {
     } else {
         throw new Error("Possible file upload attack!");
     }
